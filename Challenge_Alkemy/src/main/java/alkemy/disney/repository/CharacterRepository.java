@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface CharacterRepository extends JpaRepository<DisneyCharacter, Integer> {
 
-    DisneyCharacter findByName();
+    DisneyCharacter findByName(String name);
 
-    DisneyCharacter findByAge();
+    DisneyCharacter findByAge(int age);
 
     DisneyCharacter findByMovies(List<Movie> movies);
 }

@@ -7,12 +7,11 @@ import java.util.List;
 
 public interface ICharacterService {
 
-    DisneyCharacterDTO createCharacter(String name, int age, double weight, String story);
+    DisneyCharacterDTO createCharacter(String name, String image, Integer age, double weight, String story);
 
-    DisneyCharacterDTO findCharacter(String name, int age, List<Movie> movies);
+    DisneyCharacterDTO findCharacter(String name, Integer age, List<Movie> movies);
 
-    DisneyCharacterDTO updateCharacter(String name, int age, double weight, String story);
+    DisneyCharacterDTO updateCharacter(String name, String image, Integer age, double weight, String story);
 
     void deleteCharacter (int id);
-
 }
