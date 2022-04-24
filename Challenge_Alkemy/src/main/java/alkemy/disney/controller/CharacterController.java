@@ -18,24 +18,26 @@ public class CharacterController {
     private ICharacterService characterService;
 
     @GetMapping("/character")
-    public ResponseEntity<DisneyCharacterDTO> getCharacter(@PathVariable String name, @PathVariable int age, @PathVariable List<Movie> movies) {
+    public ResponseEntity<DisneyCharacterDTO> getCharacter(@RequestBody String name, @RequestBody int age, @RequestBody List<Movie> movies) {
         return new ResponseEntity(characterService.findCharacter(name, age, movies), HttpStatus.OK);
     }
 
     @PostMapping("/create_character")
-    public ResponseEntity<DisneyCharacterDTO> createCharacter(String name, String image, Integer age, double weight, String story){
-        return new ResponseEntity(characterService.createCharacter(name, image, age, weight, story), HttpStatus.CREATED);
+    public ResponseEntity<DisneyCharacterDTO> createCharacter(@RequestBody DisneyCharacterDTO disneyCharacterDTO){
+        return new ResponseEntity(characterService.createCharacter(disneyCharacterDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/update_character")
-    public ResponseEntity<DisneyCharacterDTO> updateCharacter(String name, String image, Integer age, double weight, String story){
-        return new ResponseEntity(characterService.updateCharacter(name, image, age, weight, story), HttpStatus.ACCEPTED);
+    public ResponseEntity<DisneyCharacterDTO> updateCharacter(
+            @RequestBody String name, @RequestBody String image, @RequestBody Integer age, @RequestBody Double weight, @RequestBody String story
+    ){
+        return new ResponseEntity(characterService.updateCharacter(name, image, age, weight, story), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCharacter(@PathVariable(name = "id") int id) {
         characterService.deleteCharacter(id);
-        return ResponseEntity.ok("Successfully erased");
+        return new ResponseEntity("Successfully erased", HttpStatus.NO_CONTENT);
     }
 
 }

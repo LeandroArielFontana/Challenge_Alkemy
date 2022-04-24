@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICharacterService {
 
-    DisneyCharacterDTO createCharacter(String name, String image, Integer age, double weight, String story);
+    DisneyCharacterDTO createCharacter(DisneyCharacterDTO disneyCharacterDTO);
 
     DisneyCharacterDTO findCharacter(String name, Integer age, List<Movie> movies);
 

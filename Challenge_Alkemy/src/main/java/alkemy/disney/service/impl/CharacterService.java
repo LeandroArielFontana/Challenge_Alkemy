@@ -5,7 +5,6 @@ import alkemy.disney.domain.Movie;
 import alkemy.disney.dto.DisneyCharacterDTO;
 import alkemy.disney.repository.CharacterRepository;
 import alkemy.disney.service.ICharacterService;
-import alkemy.disney.util.CharacterUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +16,22 @@ public class CharacterService implements ICharacterService {
 
     @Autowired
     private CharacterRepository characterRepository;
-    private ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public DisneyCharacterDTO createCharacter(String name, String image, Integer age, double weight, String story) {
-        DisneyCharacterDTO disneyCharacterDTO = CharacterUtil.createDisneyCharacterDTO(name, image, age, weight, story);
+    public DisneyCharacterDTO createCharacter(DisneyCharacterDTO disneyCharacterDTO) {
+        DisneyCharacter disneyCharacter = new DisneyCharacter();
         characterRepository.save(
                 modelMapper.map(disneyCharacterDTO, DisneyCharacter.class)
         );
+        /*DisneyCharacter disneyCharacter = new DisneyCharacter();
+        disneyCharacter.setAge(disneyCharacterDTO.getAge());
+        disneyCharacter.setImage(disneyCharacterDTO.getImage());
+        disneyCharacter.setName(disneyCharacterDTO.getName());
+        disneyCharacter.setRegister(true);
+        disneyCharacter.setStory(disneyCharacterDTO.getStory());
+        disneyCharacter.setWeight(disneyCharacterDTO.getWeight());*/
         return disneyCharacterDTO;
     }
 
@@ -37,7 +44,7 @@ public class CharacterService implements ICharacterService {
         }else if(!(age == null)){
             disneyCharacterDTO = modelMapper.map(characterRepository.findByAge(age), DisneyCharacterDTO.class);
         }else if(!movies.isEmpty()){
-            disneyCharacterDTO = modelMapper.map(characterRepository.findByMovies(movies), DisneyCharacterDTO.class); // este hay que pensarlo mejor
+            //disneyCharacterDTO = modelMapper.map(characterRepository.findByMovies(movies), DisneyCharacterDTO.class); // este hay que pensarlo mejor
         }
         return disneyCharacterDTO;
     }
